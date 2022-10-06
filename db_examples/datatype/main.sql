@@ -31,7 +31,7 @@ create table dropme (
 	col9  timestamp with time zone,
 	col10 interval day to second,
 	--
-	col11 long,
+	col11 long,              -- deprecated
 	col12 raw(32),
 	col13 rowid,
 	col14 clob,
