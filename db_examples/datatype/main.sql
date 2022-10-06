@@ -6,6 +6,7 @@
  */
 
 
+
 whenever sqlerror exit rollback
 set timing on
 set serveroutput on size unl
@@ -39,21 +40,22 @@ create table dropme (
 	col17 sys.odcinumberlist -- nested table
 ) pctfree 0;
 
--- constant data types
+
+-- functions to convert data types
 insert into dropme
     select
-        1 col1,
-        1.2 col2,
-        1.24 col3,
+        to_number('1' default null on conversion error),
+        cast(1.2 as integer) as col2,
+        cast(1.235 as number(5,2)) as col3,
         --
-        '100500' col4,
+        to_char(100500, 'fm999G999D00') col4,
         'yYy' col5,
-        'xXx' col6,
+        cast('xXx' as char(10)) col6,
         --
-        date'2022-01-01' col7,
-        timestamp'2022-01-01 01:22:33.45678' col8,
+        to_date('2022-01-01', 'yyyy-mm-dd') col7,
+        to_timestamp('2022-01-01 01:22:33.45678', 'yyyy-mm-dd hh24:mi:ss.ff') col8,
         timestamp'2022-01-02 01:22:33.45678 UTC' col9,
-        interval'1'day col10,
+        numtodsinterval(26, 'day') col10,
         utl_raw.cast_to_raw('xXx') col11,
         standard_hash('xXx','SHA1') col12,
         rowid col13,
@@ -63,27 +65,13 @@ insert into dropme
         sys.odcinumberlist(1,2,3) col17
     from dual;
 
--- data convertion
-insert into dropme
-    select
-        to_number('1' default null on conversion error) as col1,
-        cast(1.2 as integer) as col2,
-        cast(1.235 as number(5,2)) as col3,
-        --
-        to_char(100500, 'fm999G999D00') as col4,
-        -- nvarchar2? as col5,
-        cast('xXx' as char(10)) as col6,
-        to_date('')
-        to_timestamp('')
-        dsinterval,
-        
-        --
-    from dual;
+commit;
 
+
+-- comparison with null value
 select * from dual where dummy in ('X', null);
 select * from dual where dummy not in ('X', null);
 select * from dual where null = null;
 select * from dual where null is null;
 select * from dual where 'X' <> null;
 select * from dual where lnnvl('X' <> null);
-
