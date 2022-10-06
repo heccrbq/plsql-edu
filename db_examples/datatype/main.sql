@@ -75,3 +75,20 @@ select * from dual where null = null;
 select * from dual where null is null;
 select * from dual where 'X' <> null;
 select * from dual where lnnvl('X' <> null);
+
+
+-- rowid consists of: 
+--                    ACcKnZ-AGW-AAAPg3-AAA
+--                      |     |    |     |
+--          -------------     |    |     -------
+--          |                 |    |           |
+--         data        relative    block      row
+--         object      file        number     number
+--         number      number
+select 
+    rowid,
+    dbms_rowid.rowid_object(rowid) object_id,
+    dbms_rowid.rowid_relative_fno(rowid) file_id,
+    dbms_rowid.rowid_block_number(rowid) block_id,
+    dbms_rowid.rowid_row_number(rowid) row_id 
+from dropme;
