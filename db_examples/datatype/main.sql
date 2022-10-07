@@ -16,16 +16,17 @@ set serveroutput on size unl
 
 sho parameter recyclebin
 sho parameter max_string_size
+sho parameter nls_length_semantics
 
 drop table dropme purge;
 
 -- using data types
 create table dropme (
 	col1  number,
-	col2  integer,      -- number(38,0)
-	col3  number(5,2),  -- float, binary_float etc.
+	col2  integer,           -- number(38,0)
+	col3  number(5,2),       -- float, binary_float etc.
 	-- 
-	col4  varchar2(50), -- in case of max_string_size = 'EXNTEDED' then varchar2(32767)
+	col4  varchar2(50 char), -- in case of max_string_size = 'EXNTEDED' then varchar2(32767)
 	col5  nvarchar2(10),
 	col6  char(10),
 	--
