@@ -3,6 +3,9 @@
  * функции приведения типов
  * null значение
  * состав rowid
+ * --
+ * RESOURCES:
+ *   https://docs.oracle.com/database/121/SQLRF/sql_elements001.htm#SQLRF30020
  */
 
 
