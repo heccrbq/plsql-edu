@@ -1,3 +1,5 @@
+/* FORALL 15x faster then FOR */
+
 drop table dropme purge;
 
 create table dropme (col1 number) pctfree 0;
