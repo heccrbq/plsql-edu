@@ -10,13 +10,13 @@ declare
     l_rowcount number := 1e6;
     l_collect  sys.ku$_objnumset;
     --
-    l_time    number := dbms_utility.get_time;
-    procedure logtime(p_message in varchar2)
+    l_time     number := dbms_utility.get_time;
+    procedure logtime(p_message in varchar2 default null)
     is
         l_curtime number;
     begin
         l_curtime := dbms_utility.get_time;
-        dbms_output.put_line(p_message || ' : ' || to_char(l_curtime - l_time));
+        dbms_output.put_line(case when p_message is not null then p_message || ' : ' end || to_char(l_curtime - l_time));
         l_time:= l_curtime;
     end logtime;
 begin
