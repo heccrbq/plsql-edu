@@ -7,10 +7,10 @@ create table dropme (col1 number) pctfree 0;
 set timing on
 set serveroutput on size unl
 declare
-    l_time     number := dbms_utility.get_time;
     l_rowcount number := 1e6;
     l_collect  sys.ku$_objnumset;
     --
+    l_time    number := dbms_utility.get_time;
     procedure logtime(p_message in varchar2)
     is
         l_curtime number;
