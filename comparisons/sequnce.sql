@@ -2,10 +2,14 @@
  *  NEXTVAL FROM SELECT VS PLSQL
  */
 
+drop sequence dropme_seq;
+create sequence dropme_seq nocache;
+
+
 set timing on 
 set serveroutput on
 declare
-    c_interate pls_integer := 1e6;
+    c_interate pls_integer := 1e5;
     l_nextval  number;
     --
     l_time     number := dbms_utility.get_time;
@@ -21,13 +25,13 @@ begin
     logtime;
     for i in 1..c_interate
     loop
-        SELECT S_UBRR_LOG_TNUM.NEXTVAL into l_nextval FROM SYS.DUAL;
+        select dropme_seq.nextval into l_nextval from sys.dual;
     end loop;
     logtime('   WITH SELECT');
     
     for i in 1..c_interate
     loop        
-        l_nextval := S_UBRR_LOG_TNUM.NEXTVAL;
+        l_nextval := dropme_seq.nextval;
     end loop;
     logtime('WITHOUT SELECT');
 end;
