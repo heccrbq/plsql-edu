@@ -40,6 +40,11 @@ where trace_filename = 'rtwr_ora_42533162_dvb241022_1549.trc';
 
 
 
+select * From v$sesstat st join v$statname sn using (statistic#) where sid = userenv('sid')
+and sn.name in ('redo size', 'redo entries','undo change vector size') order by sn.name;
+
+
+
 
 =====================
 PARSING IN CURSOR #4852512888 len=143 dep=0 uid=64 oct=47 lid=64 tim=105928468827886 hv=1804881091 ad='700010007b7d050' sqlid='bmqfc35pt8m63'
