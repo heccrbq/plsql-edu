@@ -100,18 +100,6 @@ EXEC #4852512888:c=3193,e=9941,p=0,cr=6,cu=10,mis=0,r=1,dep=0,og=1,plh=0,tim=105
 WAIT #4852512888: nam='log file sync' ela= 986 buffer#=126992 sync scn=1104899636853 p3=0 obj#=-1 tim=105928468839083
 WAIT #4852512888: nam='SQL*Net message to client' ela= 3 driver id=675562835 #bytes=1 p3=0 obj#=-1 tim=105928468839160
 
-*** 2022-11-24T18:08:38.247276+05:00
-WAIT #4852512888: nam='SQL*Net message from client' ela= 3112993 driver id=675562835 #bytes=1 p3=0 obj#=-1 tim=105928471952213
-CLOSE #4852512888:c=16,e=27,dep=0,type=0,tim=105928471952409
-=====================
-PARSING IN CURSOR #4852512888 len=55 dep=0 uid=64 oct=42 lid=64 tim=105928471952644 hv=2217940283 ad='0' sqlid='06nvwn223659v'
-alter session set events '10046 trace name context off'
-END OF STMT
-PARSE #4852512888:c=95,e=156,p=0,cr=0,cu=0,mis=0,r=0,dep=0,og=0,plh=0,tim=105928471952643
-EXEC #4852512888:c=356,e=741,p=0,cr=0,cu=0,mis=0,r=0,dep=0,og=0,plh=0,tim=105928471953520
-
-
-
 
 
 ********************************************************************************
