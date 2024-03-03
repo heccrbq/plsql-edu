@@ -1,4 +1,7 @@
 --12
+drop table table1 purge;
+drop table table2 purge;
+
 create table table1 as select * from dual;
 create table table2 as select * from dual;
 
@@ -19,6 +22,29 @@ end;
 
 select * from table1;
 select * from table2;
+
+
+-- proof
+-- check commit count : 21
+select name, value From v$mystat natural join v$statname where name = 'user commits';
+
+truncate table table1;
+
+-- check commit one more time : 22
+select name, value From v$mystat natural join v$statname where name = 'user commits';
+
+-- truncate with error
+truncate table table1 nowait;
+
+-- check commit one more time : 22
+select name, value From v$mystat natural join v$statname where name = 'user commits';
+
+-- 2 implicit commits
+insert into table1 values ('Y');
+truncate table table1;
+
+-- check commit one more time : 29
+select name, value From v$mystat natural join v$statname where name = 'user commits';
 
 
 
