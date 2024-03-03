@@ -11,3 +11,26 @@ begin
     end if;
 end f;
 /
+
+
+--12
+create table table1 as select * from dual;
+create table table2 as select * from dual;
+
+set serveroutput on size unl
+begin
+    dbms_output.put_line('start');
+    delete from table1;
+    dbms_output.put_line('delete completed');
+    execute immediate'truncate table table2 nowait';
+    dbms_output.put_line('truncate completed');
+    commit;
+exception
+    when others then
+        dbms_output.put_line('Exception');
+        rollback;
+end;
+/
+
+select * from table1;
+select * from table2;
