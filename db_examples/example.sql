@@ -12,6 +12,7 @@
 | Id  | Operation                      | Name      | Starts | E-Rows | A-Rows |   A-Time   | Buffers | Reads  |
 ---------------------------------------------------------------------------------------------------------------
 ...
+|   3 |    NESTED LOOPS                |           |      1 |  60682 |  60682 |00:00:00.57 |     176K|      0 |
 |   4 |     TABLE ACCESS FULL          | TTESTTBL  |      1 |  60682 |  60682 |00:00:00.01 |     249 |      0 |
 |   5 |     TABLE ACCESS BY INDEX ROWID| DROPME    |  60682 |      1 |  60682 |00:00:00.47 |     176K|      0 |
 |*  6 |      INDEX UNIQUE SCAN         | PK_DROPME |  60682 |      1 |  60682 |00:00:00.28 |     115K|      0 |
