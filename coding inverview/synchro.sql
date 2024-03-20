@@ -77,6 +77,18 @@ from (
     from pattern
 )
 where rn = 1
+----
+--or
+----
+select * from pattern
+match_recognize (
+    partition by num
+    one row per match
+    after match skip past last row
+    pattern(unq unwanted*)
+    define
+        unq as running count(1) = 1
+)
 
 
 num
