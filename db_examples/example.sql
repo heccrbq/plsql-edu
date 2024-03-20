@@ -3,7 +3,7 @@
 Используя CTE pattern в качестве исходного набора данных, написать запрос который выбирет строки, содержащие только цифры.
 
 with pattern as (select '123a345fb' str from dual union all select '2344556' from dual union all select 'a2404059b' from dual)
-select * from pattern
+select * from pattern where translate(str,'#1234567890','#') is null
 
 
 ----------------------------------------------------------------------
@@ -15,7 +15,7 @@ select * from pattern
 2. заменить латинтские символы на кириллические
 
 with pattern as ( select 'Соловьeв' last_name from dual union all select 'Григорьев' from dual)
-select * from pattern 
+select translate(last_name,'AaBCcEeKkMOo','АаВСсЕеКкМОо') from pattern where regexp_like(last_name, '[A-Z]+',  'i') -- шаблон замены для translate можно продолжать по всему алфавиту. я написал для примера
 
 
 -----------------------------------------------------------------------
@@ -24,7 +24,8 @@ select * from pattern
 Используя CTE pattern в качестве исходного набора данных, написать запрос, который вернет  символы  столбца letter в количестве, соответствующему значению в столбце amount.
 
 with pattern  as (select 'a' letter, 3 amount from dual union all select 'b', 4 from dual union all select 'c', 2 from dual)
-select * from pattern
+select letter, amount from pattern 
+    ,lateral (select 1 from dual connect by level <= pattern.amount)
 
 получить результат 
 letter amount
@@ -45,7 +46,7 @@ c    2
 по порядку нечетное число, а четному числу следующее по порядку четное число.
 
 with pattern as (select level l from  dual connect by level<=100)
-select * from pattern
+select l-2 l, l l_shift from pattern where l > 2
 
 l,l_shift
 1   3
@@ -65,7 +66,18 @@ l,l_shift
 Используя CTE pattern в качестве исходного набора данных, написать запрос без включения операторов DISTINCT и GROUP BY  который на выходе даст уникальные значения столбца num
 
 with pattern as (select  1 num from dual union all select 2 from dual union all select 3 from dual union all select 1 from dual union all select 3 from dual)
-select * from pattern
+select unique num from pattern -- речь была по distinct, а тут unique:)
+----
+--or
+----
+select num
+from (
+    select num,
+        row_number()over(partition by num order by rownum) rn
+    from pattern
+)
+where rn = 1
+
 
 num
 1
@@ -89,3 +101,5 @@ Client_id     |   Last_activity_date-   |   Answer_id
 Consulter_id  |   First_answer_id       |   Message_id
 Answer_Date   |   Last_Answer_id        |   Message_type_id
               |   Answers_count         |
+              
+              
