@@ -1,5 +1,8 @@
--- Интервьюев утрверждал, что каждая сессия по новой обращается в сиквенс, создавая тем самым cache для себя и если 2 разне сессии буду пользоватьс одним и тем же сиквенсом, то могут быть непоследовательные вставки. То есть использование одного сиквенса в разных сессиях якобы не гарантирует последовательный рост вставляемых значений.
--- Тест ниже показывает, что все, что написано выше - неправда. Сиквенс является объектом глобальным (ЕСЛИ ЯВНО НЕ УКАЗАНО SESSION) и никаких кэшей для сессии не создается. Более того официальная документация говорит, что сиквенс хранится в SGA.
+-- Интервьюев утрверждал, что каждая сессия по новой обращается в сиквенс, создавая тем самым cache для себя и если 2 разне сессии будут 
+        пользоваться одним и тем же сиквенсом, то могут быть непоследовательные вставки. То есть использование одного сиквенса в разных сессиях 
+        якобы не гарантирует последовательный рост вставляемых значений.
+-- Тест ниже показывает, что все, что написано выше - неправда. Сиквенс является объектом глобальным (ЕСЛИ ЯВНО НЕ УКАЗАНО SESSION) и 
+        никаких кэшей для сессии не создается. Более того официальная документация говорит, что сиквенс хранится в SGA.
 
 drop table dropme;
 create table dropme(id number, source varchar2(50), datetime timestamp);
@@ -64,4 +67,7 @@ end;
 /
 
 -- OFFICIAL DOCS:
-The CACHE option pre-allocates and stores 500 sequence numbers in the instance's SGA for fast access. When those sequence numbers are used up, Oracle pre-allocates another group of sequence numbers. The CACHE option should be set to a value so that sequence requests for one to two seconds during the peak period can be satisfied if memory is critical for performance (see Oracle 11g SQL Reference and Oracle 11g Real Application Cluster (RAC) Administration.)
+The CACHE option pre-allocates and stores 500 sequence numbers in the instance's SGA for fast access. 
+When those sequence numbers are used up, Oracle pre-allocates another group of sequence numbers. 
+The CACHE option should be set to a value so that sequence requests for one to two seconds during the peak period can be satisfied 
+if memory is critical for performance (see Oracle 11g SQL Reference and Oracle 11g Real Application Cluster (RAC) Administration.)
