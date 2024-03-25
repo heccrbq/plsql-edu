@@ -34,6 +34,6 @@ begin
     
     return l_result$;
 end;
-select * from table(f(1,100));
+select column_value id from table(f(1,100));
 /
 
