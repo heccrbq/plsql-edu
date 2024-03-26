@@ -203,7 +203,7 @@ dbms_utility.error_stacktrace
 dbms_utility.backtrace
 
 23.Назвать примеры json-функций. Написать пример выбора значения поля b из JSON-объекта {"a":{"b": 123}}
-json_table
+select * from (select '{a:{b:123}}' x from dual), json_table(x,'$.a.b' columns a number path '$')
 
 24.Как назначить имя неименованному exception-у в PL/SQL блоке?
 declare
