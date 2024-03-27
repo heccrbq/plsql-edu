@@ -40,7 +40,7 @@ OneEditApart("cat", "at") -> true
 OneEditApart("cat", "acts") -> false 
 
 
-create or replace function OneEditApart(p_string1 in varchar2, p_string_2 in varchar2) return boolean
+create or replace function OneEditApart(p_string1 in varchar2, p_string2 in varchar2) return boolean
 is
     l_length number;
     l_length_str1 number;
@@ -66,7 +66,7 @@ begin
         if nvl(substr(p_string1, l_index_str1, 1), '$') <> nvl(substr(p_string2, l_index_str2, 1), '$') then
             if l_length_str2 > l_length_str1 then
                 l_index_str2 := l_index_str2 + 1;
-            elsif l_length_str1 > l_length_str2
+            elsif l_length_str1 > l_length_str2 then
                 l_index_str1 := l_index_str1 + 1;
             else 
                 l_index_str1 := l_index_str1 + 1;                
